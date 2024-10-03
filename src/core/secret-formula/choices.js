@@ -72,7 +72,7 @@ export const choices = {
       },
       doubleInf: {
         id: 1,
-        description: "Double Infinities gain",
+        description: "Double Infinity gain",
         effect: 2
       },
       breakRequirement: {
