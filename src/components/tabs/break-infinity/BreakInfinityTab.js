@@ -38,7 +38,7 @@ export default {
       ];
     },
     breakRequirement() {
-      return Autobuyer.bigCrunch.breakRequirement;
+      return Autobuyer.bigCrunch.breakRequirement / 1000;;
     }
   },
   methods: {

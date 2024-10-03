@@ -78,7 +78,7 @@ export const choices = {
       breakRequirement: {
         id: 2,
         description: () => `The requirement of breaking Infinity are raised to ${formatFloat(0.3, 1)}s`,
-        effect: 0.3
+        effect: 300
       },
       abandon: {
         id: 3,
