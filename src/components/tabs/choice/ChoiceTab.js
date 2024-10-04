@@ -12,13 +12,19 @@ export default {
       return ChoiceGroup.all;
     },
   },
+  methods: {
+    hardReset() {
+      Modal.hardReset.show();
+    }
+  },
   template: `
   <div>
     <div>
-      <PrimaryButton>
+      <PrimaryButton @click="hardReset">
         Hard Reset
       </PrimaryButton>
     </div>
+    <br>
     <ChoiceItem
       v-for="group in groups"
       :key="group.id"
