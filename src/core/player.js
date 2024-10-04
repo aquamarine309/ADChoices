@@ -35,7 +35,7 @@ window.player = {
   secretAchievementBits: Array.repeat(0, 4),
   infinityUpgrades: new Set(),
   infinityRebuyables: [0, 0, 0],
-  choices: Array.repeat(-1, 3),
+  choices: Array.repeat(-1, 15),
   choiceUnlockedBits: 0,
   challenge: {
     normal: {
@@ -361,7 +361,7 @@ window.player = {
     previousRuns: {}
   },
   IPMultPurchases: 0,
-  version: 25,
+  version: 30,
   infinityPower: DC.D1,
   postC4Tier: 0,
   eternityPoints: DC.D0,

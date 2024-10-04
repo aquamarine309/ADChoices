@@ -1,9 +1,11 @@
 import ChoiceItem from "./ChoiceItem.js";
+import PrimaryButton from "../../PrimaryButton.js";
 
 export default {
   name: "ChoiceTab",
   components: {
-    ChoiceItem
+    ChoiceItem,
+    PrimaryButton
   },
   computed: {
     groups() {
@@ -12,6 +14,11 @@ export default {
   },
   template: `
   <div>
+    <div>
+      <PrimaryButton>
+        Hard Reset
+      </PrimaryButton>
+    </div>
     <ChoiceItem
       v-for="group in groups"
       :key="group.id"

@@ -115,10 +115,7 @@ export class DimBoost {
       amount += Math.pow(targetResets - 1, 3) + targetResets - 1;
     }
 
-    amount -= Effects.sum(
-      InfinityUpgrade.resetBoost,
-      ChoiceGroup.reach100AM.choices.cheapBoosts
-    );
+    amount -= Effects.sum(InfinityUpgrade.resetBoost);
     if (InfinityChallenge(5).isCompleted) amount -= 1;
 
     amount *= InfinityUpgrade.resetBoost.chargedEffect.effectOrDefault(1);
@@ -174,7 +171,7 @@ export class DimBoost {
 
   static get startingDimensionBoosts() {
     if (InfinityUpgrade.skipResetGalaxy.isBought) return 4;
-    if (InfinityUpgrade.skipReset3.isBought || ChoiceGroup.reach100AM.choices.startingBoosts.canBeApplied) return 3;
+    if (InfinityUpgrade.skipReset3.isBought) return 3;
     if (InfinityUpgrade.skipReset2.isBought) return 2;
     if (InfinityUpgrade.skipReset1.isBought) return 1;
     return 0;
@@ -197,9 +194,10 @@ export function softReset(tempBulk, forcedADReset = false, forcedAMReset = false
     resetTickspeed();
   }
   skipResetsIfPossible(enteringAntimatterChallenge);
-  const canKeepAntimatter = Pelle.isDoomed
+  const canKeepAntimatter = (Pelle.isDoomed
     ? PelleUpgrade.dimBoostResetsNothing.canBeApplied
-    : (Achievement(111).isUnlocked || Perk.antimatterNoReset.canBeApplied);
+    : (Achievement(111).isUnlocked || Perk.antimatterNoReset.canBeApplied))
+    || ChoiceGroup.reach100AM.choices.boostNoReset.canBeApplied;
   if (!forcedAMReset && canKeepAntimatter) {
     Currency.antimatter.bumpTo(Currency.antimatter.startingValue);
   } else {

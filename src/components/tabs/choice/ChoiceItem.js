@@ -17,8 +17,7 @@ export default {
   },
   data() {
     return {
-      isUnlocked: false,
-      isAbandoned: false
+      isUnlocked: false
     }
   },
   computed: {
@@ -35,17 +34,15 @@ export default {
   methods: {
     update() {
       this.isUnlocked = this.group.isUnlocked;
-      this.isAbandoned = this.group.isAbandoned;
     }
   },
   template: `
     <div class="c-choice-group">
       <div class="c-choice-title">Choice Group {{ formatInt(config.id + 1) }}</div>
-      <div v-if="isAbandoned">Abandoned</div>
       <div>
         <DescriptionDisplay
           :config="config"
-          title="Reward:"
+          title="Penalty:"
         />
         <EffectDisplay
           br

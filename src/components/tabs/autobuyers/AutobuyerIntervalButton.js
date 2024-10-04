@@ -11,7 +11,8 @@ export default {
       cost: 0,
       isMaxed: false,
       isUpgradeable: false,
-      isAffordable: false
+      isAffordable: false,
+      isFree: false
     };
   },
   computed: {
@@ -21,6 +22,9 @@ export default {
         "l-autobuyer-box__button": true,
         "o-autobuyer-btn--unavailable": !this.isAffordable
       };
+    },
+    costLabel() {
+      return this.isFree ? "Requirement" : "cost";
     }
   },
   methods: {
@@ -29,6 +33,7 @@ export default {
       this.isMaxed = this.autobuyer.hasMaxedInterval;
       this.isUpgradeable = this.autobuyer.canBeUpgraded;
       this.isAffordable = Currency.infinityPoints.gte(this.cost);
+      this.isFree = ChoiceGroup.challenges.choices.autoUpgFree.canBeApplied;
     },
     upgradeInterval() {
       this.autobuyer.upgradeInterval();
@@ -42,7 +47,7 @@ export default {
   >
     {{ formatPercents(0.4) }} smaller interval
     <br>
-    Cost: {{ format(cost, 2) }} IP
+    {{ costLabel }}: {{ format(cost, 2) }} IP
   </button>
   <button
     v-else-if="!isMaxed"

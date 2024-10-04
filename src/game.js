@@ -299,7 +299,8 @@ export const GAME_SPEED_EFFECT = {
   BLACK_HOLE: 3,
   TIME_STORAGE: 4,
   SINGULARITY_MILESTONE: 5,
-  NERFS: 6
+  NERFS: 6,
+  CHOICE: 7
 };
 
 /**
@@ -312,7 +313,8 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   let effects;
   if (effectsToConsider === undefined) {
     effects = [GAME_SPEED_EFFECT.FIXED_SPEED, GAME_SPEED_EFFECT.TIME_GLYPH, GAME_SPEED_EFFECT.BLACK_HOLE,
-      GAME_SPEED_EFFECT.TIME_STORAGE, GAME_SPEED_EFFECT.SINGULARITY_MILESTONE, GAME_SPEED_EFFECT.NERFS];
+      GAME_SPEED_EFFECT.TIME_STORAGE, GAME_SPEED_EFFECT.SINGULARITY_MILESTONE, GAME_SPEED_EFFECT.NERFS,
+      GAME_SPEED_EFFECT.CHOICE];
   } else {
     effects = effectsToConsider;
   }
@@ -324,6 +326,15 @@ export function getGameSpeedupFactor(effectsToConsider, blackHolesActiveOverride
   }
 
   let factor = 1;
+  
+  if (DEV) {
+    factor *= 100;
+  }
+  
+  if (effects.includes(GAME_SPEED_EFFECT.CHOICE)) {
+    factor *= ChoiceGroup.challenges.choices.adMultToSpeed.effectOrDefault(1);
+  }
+  
   if (effects.includes(GAME_SPEED_EFFECT.BLACK_HOLE)) {
     if (BlackHoles.areNegative) {
       factor *= player.blackHoleNegative;

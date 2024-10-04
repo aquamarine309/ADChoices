@@ -9288,9 +9288,6 @@ input.o-automator-block-input {
   height: 100%;
 }
 
-.c-choice-list {
-}
-
 .o-choice-btn {
   border: 0.1rem solid var(--color-good);
   background-color: var(--color-good);
@@ -9348,7 +9345,6 @@ input.o-automator-block-input {
 
 .c-choice-group {
   background-color: var(--color-base);
-  border-radius: 2rem;
   padding: 1rem 1rem;
 }
 

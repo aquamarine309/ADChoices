@@ -14,7 +14,8 @@ export default {
       bulkUnlimited: false,
       bulk: 1,
       cost: 1,
-      isAffordable: false
+      isAffordable: false,
+      isFree: false
     };
   },
   computed: {
@@ -31,6 +32,9 @@ export default {
         "o-autobuyer-btn--unavailable": !this.isAffordable && !this.hasMaxedBulk,
         "o-non-clickable": this.hasMaxedBulk
       };
+    },
+    costLabel() {
+      return this.isFree ? "Requirement" : "cost";
     }
   },
   methods: {
@@ -43,6 +47,7 @@ export default {
       this.bulk = autobuyer.bulk;
       this.cost = autobuyer.cost;
       this.isAffordable = Currency.infinityPoints.gte(this.cost);
+      this.isFree = ChoiceGroup.challenges.choices.autoUpgFree.canBeApplied;
     },
     upgradeBulk() {
       this.autobuyer.upgradeBulk();
@@ -58,7 +63,7 @@ export default {
     <span>{{ bulkDisplay }}</span>
     <template v-if="!hasMaxedBulk">
       <br>
-      <span>Cost: {{ format(cost, 2, 0) }} IP</span>
+      <span>{{ costLabel }}: {{ format(cost, 2, 0) }} IP</span>
     </template>
   </button>
   <button

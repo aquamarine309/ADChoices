@@ -71,7 +71,7 @@ export class Galaxy {
   }
 
   static get baseCost() {
-    return NormalChallenge(10).isRunning ? 99 : 80;
+    return (NormalChallenge(10).isRunning ? 99 : 80) - ChoiceGroup.reach100AM.choices.galaxyCost.effectOrDefault(0);
   }
 
   static get requiredTier() {

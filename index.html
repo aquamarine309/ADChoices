@@ -56,10 +56,13 @@
     document.getElementById("loading").style.display = "none";
     document.getElementById("browser-warning").style.display = "flex";
   }
-  
+
+  window.errorMessages = [];
+
   window.addEventListener("error", function(e) {
-    console.warn(`${e.message}\n(at: ${e.filename}:${e.lineno}:${e.colno})
-    `);
-  })
+    const errorMessage = `${e.message}\n(at: ${e.filename}:${e.lineno}:${e.colno})`;
+    console.warn(errorMessage);
+    window.errorMessages.push(errorMessage);
+  });
 </script>
 </html>

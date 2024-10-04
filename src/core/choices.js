@@ -14,6 +14,7 @@ class ChoiceState extends GameMechanicState {
     if (this.group.chose !== -1) return;
     this.group.chose = this.id;
     this.config.onChosen?.();
+    TabNotification.newChoiceGroup.clearTrigger();
   }
 }
 
@@ -25,8 +26,10 @@ class ChoiceGroupState extends GameMechanicState {
       this.choices[choice] = new ChoiceState(config.choices[choice], this);
     }
     this.registerEvents(config.checkEvent, args => this.tryUnlock(args));
+    // TODO: Remove this code when all choices are determined
+    // if (this.chose === undefined) this.chose = -1;
   }
-  
+
   get isUnlocked() {
     return (player.choiceUnlockedBits & (1 << this.id)) !== 0;
   }
@@ -38,8 +41,6 @@ class ChoiceGroupState extends GameMechanicState {
 
   unlock() {
     player.choiceUnlockedBits |= (1 << this.id);
-    // TODO: Remove this code when all choices are determined
-    if (this.chose === undefined) this.chose = -1;
     TabNotification.newChoiceGroup.tryTrigger();
     GameCache.unlockedChoiceGroups.invalidate();
   }
@@ -54,11 +55,7 @@ class ChoiceGroupState extends GameMechanicState {
   }
 
   get isEffectActive() {
-    return this.chose !== -1 && !this.isAbandoned;
-  }
-
-  get isAbandoned() {
-    return this.config.isAbandoned?.() ?? false;
+    return this.chose !== -1;
   }
 }
 

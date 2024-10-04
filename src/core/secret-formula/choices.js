@@ -6,26 +6,20 @@ export const choices = {
     requirement: () => `Reach ${format(100)} antimatter`,
     checkRequirement: () => player.antimatter.gte(100),
     checkEvent: GAME_EVENT.GAME_TICK_AFTER,
-    description: () => `Provide +${format(5)} multiplier to all Dimensions per choice`,
-    effect: () => DC.D5.times(ChoiceGroup.unlockedCount).clampMin(1),
-    formatEffect: value => formatX(value, 2),
     choices: {
-      startingBoosts: {
+      boostNoReset: {
         id: 0,
-        description: () => `Start every reset with ${formatInt(3)} Dimension Boosts (Effective immediately)`,
-        onChosen() {
-          player.dimensionBoosts = Math.max(player.dimensionBoosts, 3);
-        }
+        description: () => `Dimension Boosts no longer reset your antimatter`
       },
       improveBoosts: {
         id: 1,
-        description: () => `Dimension Boosts are ${formatPercents(0.25)} stronger`,
-        effect: 1.25
+        description: () => `Dimension Boosts are ${formatPercents(0.5)} stronger`,
+        effect: 1.5
       },
-      cheapBoosts: {
+      galaxyCost: {
         id: 2,
-        description: () => `Decrease the number of Dimensions needed for Dimension Boosts and Antimatter Galaxies by ${formatInt(1)}`,
-        effect: 1
+        description: () => `Decrease Antimatter Galaxy cost by ${formatInt(10)}`,
+        effect: 10
       }
     }
   },
@@ -34,8 +28,6 @@ export const choices = {
     requirement: () => "Purchase a Antimatter Galaxy",
     checkRequirement: () => true,
     checkEvent: GAME_EVENT.GALAXY_RESET_AFTER,
-    description: () => `Increase buying ten multiplier by ${format(0.1, 0, 1)}`,
-    effect: 0.1,
     choices: {
       boostForAllDim: {
         id: 0,
@@ -43,7 +35,7 @@ export const choices = {
       },
       freeGalaxy: {
         id: 1,
-        description: "When you only have one Antimatter Galaxy, you will gain a free Antimatter Galaxy (Effective immediately)",
+        description: "When you only have one Antimatter Galaxy, you will gain a free Antimatter Galaxy (Activate immediately)",
         onChosen() {
           applyFreeGalaxy();
         }
@@ -62,8 +54,6 @@ export const choices = {
     requirement: () => "Big Crunch",
     checkRequirement: () => true,
     checkEvent: GAME_EVENT.BIG_CRUNCH_AFTER,
-    description: () => `AD1 - AD5 produce ${formatX(3)} faster, but AD6 - AD8 produce ${formatX(1)}/${format(8)} slower`,
-    isAbandoned: () => ChoiceGroup.crunch.choices.abandon.canBeApplied,
     choices: {
       tripleIP: {
         id: 0,
@@ -77,12 +67,32 @@ export const choices = {
       },
       breakRequirement: {
         id: 2,
-        description: () => `The requirement of breaking Infinity are raised to ${formatFloat(0.3, 1)}s`,
+        description: () => `The requirement of breaking Infinity is raised to ${formatFloat(0.3, 1)}s`,
         effect: 300
+      }
+    }
+  },
+  challenges: {
+    id: 3,
+    requirement: () => `Complete ${formatInt(6)} Challenges`,
+    checkRequirement: () => NormalChallenges.all.countWhere(c => c.isCompleted) >= 3,
+    checkEvent: [GAME_EVENT.BIG_CRUNCH_AFTER, GAME_EVENT.REALITY_RESET_AFTER, GAME_EVENT.REALITY_UPGRADE_TEN_BOUGHT],
+    choices: {
+      otherChalls: {
+        id: 0,
+        description: "Complete other Challenges immediately",
+        onChosen() {
+          NormalChallenges.completeAll();
+        }
       },
-      abandon: {
-        id: 3,
-        description: () => "Abandon this Choice Group"
+      adMultToSpeed: {
+        id: 1,
+        description: () => `Decrease buying ten multiplier (-${format(0.1, 0, 1)}), but multiply game speed by ${formatX(2)}`,
+        effect: 2
+      },
+      autoUpgFree: {
+        id: 2,
+        description: "Autobuyer Upgrades are free"
       }
     }
   }

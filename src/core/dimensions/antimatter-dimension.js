@@ -40,8 +40,7 @@ export function antimatterDimensionCommonMultiplier() {
     InfinityChallenge(8),
     EternityChallenge(10),
     AlchemyResource.dimensionality,
-    PelleUpgrade.antimatterDimensionMult,
-    ChoiceGroup.reach100AM
+    PelleUpgrade.antimatterDimensionMult
   );
 
   multiplier = multiplier.dividedByEffectOf(InfinityChallenge(6));
@@ -135,14 +134,6 @@ function applyNDMultipliers(mult, tier) {
   );
   if (Achievement(43).isUnlocked) {
     multiplier = multiplier.times(1 + tier / 100);
-  }
-
-  if (ChoiceGroup.crunch.canBeApplied) {
-    if (tier <= 5) {
-      multiplier = multiplier.times(3);
-    } else {
-      multiplier = multiplier.div(8);
-    }
   }
 
   multiplier = multiplier.clampMin(1);
@@ -643,14 +634,17 @@ export const AntimatterDimensions = {
 
     let mult = DC.D2.plusEffectsOf(
       Achievement(141).effects.buyTenMult,
-      EternityChallenge(3).reward,
-      ChoiceGroup.firstGalaxy
+      EternityChallenge(3).reward
     );
 
     mult = mult.timesEffectsOf(
       InfinityUpgrade.buy10Mult,
       Achievement(58)
     ).times(getAdjustedGlyphEffect("powerbuy10"));
+
+    if (ChoiceGroup.challenges.choices.adMultToSpeed.canBeApplied) {
+      mult = mult.minus(0.1);
+    }
 
     mult = mult.pow(getAdjustedGlyphEffect("effarigforgotten")).powEffectOf(InfinityUpgrade.buy10Mult.chargedEffect);
     mult = mult.pow(ImaginaryUpgrade(14).effectOrDefault(1));
