@@ -109,3 +109,4 @@ export * from "./speedrun.js";
 
 export * from "./automator/script-templates.js";
 export * from "./choices.js";
+export * from "./continuum.js";

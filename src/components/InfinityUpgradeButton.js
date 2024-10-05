@@ -13,6 +13,11 @@ export default {
     upgrade: {
       type: Object,
       required: true
+    },
+    continuum: {
+      type: Boolean,
+      reeuired: false,
+      default: false
     }
   },
   data() {
@@ -50,15 +55,16 @@ export default {
     classObject() {
       return {
         "o-infinity-upgrade-btn": true,
-        "o-infinity-upgrade-btn--bought": !this.isUseless && this.isBought,
-        "o-infinity-upgrade-btn--available": !this.isUseless && !this.isBought && this.canBeBought,
-        "o-infinity-upgrade-btn--unavailable": !this.isUseless && !this.isBought && !this.canBeBought,
+        "o-infinity-upgrade-btn--bought": !this.isUseless && this.isBought && !this.continuum,
+        "o-infinity-upgrade-btn--available": !this.isUseless && !this.isBought && this.canBeBought && !this.continuum,
+        "o-infinity-upgrade-btn--unavailable": !this.isUseless && !this.isBought && !this.canBeBought && !this.continuum,
         "o-infinity-upgrade-btn--useless": this.isUseless,
         "o-pelle-disabled": this.isUseless,
         "o-infinity-upgrade-btn--chargeable": !this.isCharged && this.chargePossible &&
           (this.showingCharged || this.shiftDown),
         "o-infinity-upgrade-btn--charged": this.isCharged,
-        "o-pelle-disabled-pointer": this.isUseless
+        "o-pelle-disabled-pointer": this.isUseless,
+        "o-infinity-upgrade-btn--continuum": this.continuum
       };
     },
     isImprovedByTS31() {
@@ -123,7 +129,7 @@ export default {
       </template>
     </span>
     <CostDisplay
-      v-if="!isBought"
+      v-if="!isBought && !continuum"
       br
       :config="config"
       name="Infinity Point"

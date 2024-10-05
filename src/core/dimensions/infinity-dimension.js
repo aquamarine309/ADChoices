@@ -81,7 +81,7 @@ class InfinityDimensionState extends DimensionState {
   }
 
   get amRequirement() {
-    return this._unlockRequirement;
+    return this._unlockRequirement.dividedByEffectOf(ChoiceGroup.breakInf.choices.decreaseReq);
   }
 
   get antimatterRequirementReached() {

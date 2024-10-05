@@ -9360,3 +9360,16 @@ input.o-automator-block-input {
   color: var(--color-infinity);
   font-weight: bold;
 }
+
+.o-infinity-upgrade-btn--continuum {
+  border-color: var(--color-laitela--accent);
+  color: var(--color-laitela--accent);
+  background-color: var(--color-laitela--base);
+  cursor: pointer;
+}
+
+.o-infinity-upgrade-btn--continuum:hover {
+  border-color: var(--color-laitela--base);
+  color: var(--color-laitela--base);
+  background-color: var(--color-laitela--accent);
+}

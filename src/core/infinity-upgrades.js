@@ -100,7 +100,8 @@ export function totalIPMult() {
       InfinityUpgrade.ipMult,
       DilationUpgrade.ipMultDT,
       GlyphEffect.ipMult,
-      ChoiceGroup.crunch.choices.tripleIP
+      ChoiceGroup.crunch.choices.tripleIP,
+      ChoiceGroup.breakInf.choices.ip6365
     );
   ipMult = ipMult.times(Replicanti.amount.powEffectOf(AlchemyResource.exponential));
   return ipMult;
@@ -144,6 +145,7 @@ class InfinityIPMultUpgrade extends GameMechanicState {
   }
 
   get purchaseCount() {
+    if (this.continuumActive) return Continuum.ipMultContinuum();
     return player.IPMultPurchases;
   }
 
@@ -166,13 +168,17 @@ class InfinityIPMultUpgrade extends GameMechanicState {
   get isBought() {
     return this.isCapped;
   }
+  
+  get continuumActive() {
+    return ChoiceGroup.breakInf.choices.ipMultContinuum.canBeApplied;
+  }
 
   get isRequirementSatisfied() {
     return Achievement(41).isUnlocked;
   }
 
   get canBeBought() {
-    return !Pelle.isDoomed && !this.isCapped && Currency.infinityPoints.gte(this.cost) && this.isRequirementSatisfied;
+    return !Pelle.isDoomed && !this.isCapped && Currency.infinityPoints.gte(this.cost) && this.isRequirementSatisfied && !this.continuumActive;
   }
 
   // This is only ever called with amount = 1 or within buyMax under conditions that ensure the scaling doesn't

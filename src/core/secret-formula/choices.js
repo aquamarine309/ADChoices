@@ -95,5 +95,28 @@ export const choices = {
         description: "Autobuyer Upgrades are free"
       }
     }
+  },
+  breakInf: {
+    id: 4,
+    requirement: () => "Break Infinity",
+    checkRequirement: () => true,
+    checkEvent: GAME_EVENT.BREAK_INFINITY,
+    choices: {
+      ip6365: {
+        id: 0,
+        description: () => `When Infinities or the exponent of current Infinity Points is a multiple of 11, IP gain ${formatX(6.365, 0, 3)}`,
+        effect: 6.365,
+        effectCondition: () => Currency.infinityPoints.exponent % 11 === 0 || Currency.infinities.value.toNumber() % 11 === 0
+      },
+      ipMultContinuum: {
+        id: 1,
+        description: `Unlock IP Multiplier Continuum`
+      },
+      decreaseReq: {
+        id: 2,
+        description: () => `Decrease the requirement of unlocking Infinity Dimension by ${format(DC.E100, 2)} antimatter`,
+        effect: DC.E100
+      }
+    }
   }
 }
