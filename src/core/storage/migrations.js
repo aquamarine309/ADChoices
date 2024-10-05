@@ -422,6 +422,9 @@ export const migrations = {
     },
     30: player => {
       while (player.choices.length < 15) player.choices.push(-1);
+    },
+    31: player => {
+      player.choices = player.choices.map(x => x > 2 ? -1 : x);
     }
   },
 
